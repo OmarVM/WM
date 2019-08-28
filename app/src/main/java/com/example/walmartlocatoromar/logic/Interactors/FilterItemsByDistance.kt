@@ -34,23 +34,16 @@ class FilterItemsByDistance {
                 distanceResult = Math.round(distanceResult / 1000).toFloat()
                 store.distanceTo = distanceResult
             }
-            sortListAsc(listItems)
+            operationOnList(listItems)
         }
     }
 
-    fun sortListAsc(listItemsAux: List<Store>){
-        var listItems = listItemsAux as ArrayList
-        listItems.sortBy { filterByDistance(it) }
-        listItems.forEach { Log.d("TAG","Lista Ordenada -> " +  it.distanceTo.toString()) }
+    fun operationOnList(listItems: List<Store>){
+        var sortHandler = SortListItems()
+        var listSorted = sortHandler.sortListAsc(listItems)
 
-        limitNumberItems(listItems)
-    }
-
-    fun filterByDistance(store: Store): Float = store.distanceTo
-
-    fun limitNumberItems(listItems: List<Store>){
-        var listWithLimit = ArrayList<Store>()
-        (0..24).forEach{ listWithLimit.add(listItems[it])}
-        presenter.listSort(listWithLimit)
+        var limitHandler = LimitItemsOnList()
+        var listLimit = limitHandler.getListByLimit(listSorted, 25)
+        presenter.listSort(listLimit)
     }
 }
