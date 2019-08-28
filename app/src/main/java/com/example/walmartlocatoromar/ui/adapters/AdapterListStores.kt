@@ -4,21 +4,31 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.walmartlocatoromar.R
+import com.example.walmartlocatoromar.logic.data.models.Store
+import kotlinx.android.synthetic.main.item_store_list.view.*
 
-class AdapterListStores : RecyclerView.Adapter<AdapterListStores.ItemStoreHolder>(){
+class AdapterListStores(var listStores: List<Store>) : RecyclerView.Adapter<AdapterListStores.ItemStoreHolder>(){
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemStoreHolder {
-        var layoutInflate = LayoutInflater.
+        var layoutInflate = LayoutInflater.from(parent.context).inflate(R.layout.item_store_list, parent, false)
+        return ItemStoreHolder(layoutInflate)
     }
 
     override fun getItemCount(): Int {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return listStores.size
     }
 
     override fun onBindViewHolder(holder: ItemStoreHolder, position: Int) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        var item = listStores[position]
+        holder.BindItem(item)
     }
 
     class ItemStoreHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 
+        fun BindItem(item: Store){
+            itemView.store_name.text = item.name
+            itemView.store_address.text = item.address
+            itemView.store_phone.text = item.telephone
+        }
     }
 }

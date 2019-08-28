@@ -5,11 +5,11 @@ import com.example.walmartlocatoromar.ui.presenters.ListStores
 
 class DataManager: APIRequestStores.OnFinishedListener {
 
-    private var requestAPI: APIRequestStores = APIRequestStores()
     private lateinit var presenter: ListStores
 
-
     fun doRequestAPI(presenter: ListStores){
+        this.presenter = presenter
+        var requestAPI = APIRequestStores()
         requestAPI.ListItems(this)
     }
 
