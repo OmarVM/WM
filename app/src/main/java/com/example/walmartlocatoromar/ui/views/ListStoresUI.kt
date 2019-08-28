@@ -6,4 +6,6 @@ interface ListStoresUI {
 
     fun infoFromData(listItems: List<Store>)
     fun infoFromDataError(messageError:String)
+
+    fun listFilterByDistance(listItems: List<Store>)
 }

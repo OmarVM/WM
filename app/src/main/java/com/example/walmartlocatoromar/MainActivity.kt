@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.walmartlocatoromar.logic.data.models.Store
 import com.example.walmartlocatoromar.tools.Constants
 import com.example.walmartlocatoromar.ui.adapters.AdapterListStores
+import com.example.walmartlocatoromar.ui.presenters.ListFilterByDistance
+import com.example.walmartlocatoromar.ui.presenters.ListFilterByDistanceImple
 import com.example.walmartlocatoromar.ui.presenters.ListStoresImple
 import com.example.walmartlocatoromar.ui.views.ListStoresUI
 import kotlinx.android.synthetic.main.activity_main.*
@@ -19,8 +21,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity(), ListStoresUI {
 
     private lateinit var presenter: ListStoresImple
+    private lateinit var listByDistancePresenter: ListFilterByDistance
     private lateinit var context: Context
     private lateinit var mAdapter: AdapterListStores
+
+    private lateinit var listItems: List<Store>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,8 +35,26 @@ class MainActivity : AppCompatActivity(), ListStoresUI {
         presenter = ListStoresImple(this)
         presenter.doRequestAPI()
 
+    }
+
+
+    override fun infoFromData(listItems: List<Store>) {
+        Log.d("TAG", "Total Items From Data: ${listItems.size}")
+        this.listItems = listItems
         requestUserPermissionLocation()
     }
+
+    override fun infoFromDataError(messageError: String) {
+        Log.d("TAG", messageError)
+    }
+
+    override fun listFilterByDistance(listItems: List<Store>) {
+        Log.d("TAG", "Total Items Filter: ${listItems.size}")
+        rv_list_stores.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+        mAdapter = AdapterListStores(listItems)
+        rv_list_stores.adapter = mAdapter
+    }
+
 
     fun requestUserPermissionLocation(){
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
@@ -40,7 +63,7 @@ class MainActivity : AppCompatActivity(), ListStoresUI {
             val listPermission = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
             ActivityCompat.requestPermissions(this, listPermission, Constants.KEY_RESQUEST_PERMISSION_LOCATION)
         }else{
-
+            listByDistancePresenter = ListFilterByDistanceImple(context, listItems, this)
         }
     }
 
@@ -51,21 +74,12 @@ class MainActivity : AppCompatActivity(), ListStoresUI {
             Constants.KEY_RESQUEST_PERMISSION_LOCATION -> {
                 if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED){
                     Log.d("TAG", "Permiso Otorgado.")
+                    listByDistancePresenter = ListFilterByDistanceImple(context, listItems, this)
                 }else{
                     Log.d("TAG", "Permiso No Otorgado.")
+                    listFilterByDistance(listItems)
                 }
             }
         }
-    }
-
-    override fun infoFromData(listItems: List<Store>) {
-        Log.d("TAG", "Total Items: ${listItems.size}")
-        rv_list_stores.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        mAdapter = AdapterListStores(listItems)
-        rv_list_stores.adapter = mAdapter
-    }
-
-    override fun infoFromDataError(messageError: String) {
-        Log.d("TAG", messageError)
     }
 }
