@@ -4,4 +4,9 @@
     <dimen name="img_item_store_height">50dp</dimen>
 
     <dimen name="space_main_content_item">10dp</dimen>
+
+    <dimen name="img_item_location_width">20dp</dimen>
+    <dimen name="img_item_location_height">20dp</dimen>
+    <dimen name="text_distance_left">5dp</dimen>
+    <dimen name="text_distance_right">5dp</dimen>
 </resources>

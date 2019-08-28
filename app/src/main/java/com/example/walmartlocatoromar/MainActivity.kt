@@ -6,6 +6,7 @@ import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -50,6 +51,7 @@ class MainActivity : AppCompatActivity(), ListStoresUI {
 
     override fun listFilterByDistance(listItems: List<Store>) {
         Log.d("TAG", "Total Items Filter: ${listItems.size}")
+        layout_content_wait.visibility = View.INVISIBLE
         rv_list_stores.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         mAdapter = AdapterListStores(listItems)
         rv_list_stores.adapter = mAdapter

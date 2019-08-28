@@ -3,4 +3,7 @@
     <string name="exemple_name">PLAYA DEL CARMEN</string>
     <string name="exemple_address">REGION 01, MANZANA 040, … 001-1 S/N, SOL. CENTRO</string>
     <string name="exemple_phone">803 0911 / 0089 / 0316 / 0335 / 0363</string>
+    <string name="exemple_distance">3.0</string>
+    <string name="exemple_distance_mesure">km</string>
+    <string name="message_wait">Obtenido lista de tiendas ...</string>
 </resources>

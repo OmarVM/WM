@@ -13,38 +13,57 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    <ImageView
-        android:src="@drawable/ic_location"
-        android:layout_width="@dimen/img_item_store_width"
-        android:layout_height="@dimen/img_item_store_height"
-        android:paddingTop="@dimen/space_main_content_item"/>
+        <ImageView
+            android:src="@drawable/ic_store"
+            android:layout_width="@dimen/img_item_store_width"
+            android:layout_height="@dimen/img_item_store_height"
+            android:paddingTop="@dimen/space_main_content_item"/>
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/space_main_content_item">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/space_main_content_item">
 
-    <TextView
-        android:id="@+id/store_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/exemple_name"
-        android:textColor="@color/textPrimary"/>
+            <TextView
+                android:id="@+id/store_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/exemple_name"
+                android:textColor="@color/textPrimary"/>
 
-    <TextView
-        android:id="@+id/store_address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/exemple_address"
-        android:textColor="@color/textSecundary"/>
+            <TextView
+                android:id="@+id/store_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/exemple_address"
+                android:textColor="@color/textSecundary"/>
 
-    <TextView
-        android:id="@+id/store_phone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/exemple_phone"
-        android:textColor="@color/textSmall"/>
-    </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+
+                <ImageView
+                    android:src="@drawable/ic_location"
+                    android:layout_width="@dimen/img_item_location_width"
+                    android:layout_height="@dimen/img_item_location_height" />
+
+                <TextView
+                    android:id="@+id/store_distance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/exemple_distance"
+                    android:textColor="@color/textSmall"
+                    android:layout_marginLeft="@dimen/text_distance_left"
+                    android:layout_marginRight="@dimen/text_distance_right"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/exemple_distance_mesure"
+                    android:textColor="@color/textSmall"/>
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

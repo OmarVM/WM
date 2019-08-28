@@ -28,7 +28,7 @@ class AdapterListStores(var listStores: List<Store>) : RecyclerView.Adapter<Adap
         fun BindItem(item: Store){
             itemView.store_name.text = item.name
             itemView.store_address.text = item.address
-            itemView.store_phone.text = item.telephone
+            itemView.store_distance.text = item.distanceTo.toString()
         }
     }
 }
