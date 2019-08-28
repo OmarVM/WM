@@ -1,11 +1,16 @@
 package com.example.walmartlocatoromar
 
+import android.Manifest
 import android.content.Context
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.walmartlocatoromar.logic.data.models.Store
+import com.example.walmartlocatoromar.tools.Constants
 import com.example.walmartlocatoromar.ui.adapters.AdapterListStores
 import com.example.walmartlocatoromar.ui.presenters.ListStoresImple
 import com.example.walmartlocatoromar.ui.views.ListStoresUI
@@ -24,11 +29,37 @@ class MainActivity : AppCompatActivity(), ListStoresUI {
         context = applicationContext
         presenter = ListStoresImple(this)
         presenter.doRequestAPI()
+
+        requestUserPermissionLocation()
     }
 
+    fun requestUserPermissionLocation(){
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED){
+
+            val listPermission = arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
+            ActivityCompat.requestPermissions(this, listPermission, Constants.KEY_RESQUEST_PERMISSION_LOCATION)
+        }else{
+
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        when(requestCode){
+            Constants.KEY_RESQUEST_PERMISSION_LOCATION -> {
+                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED){
+                    Log.d("TAG", "Permiso Otorgado.")
+                }else{
+                    Log.d("TAG", "Permiso No Otorgado.")
+                }
+            }
+        }
+    }
 
     override fun infoFromData(listItems: List<Store>) {
-        Log.d("TAG", listItems.toString())
+        Log.d("TAG", "Total Items: ${listItems.size}")
         rv_list_stores.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         mAdapter = AdapterListStores(listItems)
         rv_list_stores.adapter = mAdapter
