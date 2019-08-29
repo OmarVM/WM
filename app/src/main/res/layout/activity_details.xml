@@ -5,7 +5,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#fff"
     tools:context=".ui.views.activities.Details">
+
+    <fragment
+        android:id="@+id/map_desc"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".ui.views.activities.Details" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,16 +25,16 @@
         android:padding="@dimen/space_main_content_item"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toBottomOf="@+id/map_desc">
 
         <TextView
             android:id="@+id/store_name_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/space_main_content_item"
             android:text="@string/exemple_name"
             android:textColor="@color/textPrimary"
-            android:textSize="25sp"
-            android:paddingBottom="@dimen/space_main_content_item"/>
+            android:textSize="25sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,30 +48,31 @@
                 android:src="@drawable/ic_store" />
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/store_address_desc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/exemple_address"
-                    android:textColor="@color/textSecundary"
                     android:layout_marginLeft="@dimen/text_distance_left"
-                    android:layout_marginRight="@dimen/text_distance_right"/>
+                    android:layout_marginRight="@dimen/text_distance_right"
+                    android:text="@string/exemple_address"
+                    android:textColor="@color/textSecundary" />
 
                 <TextView
                     android:id="@+id/store_address_cp_desc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/exemple_cp"
-                    android:textColor="@color/textSecundary"
                     android:layout_marginLeft="@dimen/text_distance_left"
-                    android:layout_marginRight="@dimen/text_distance_right"/>
+                    android:layout_marginRight="@dimen/text_distance_right"
+                    android:text="@string/exemple_cp"
+                    android:textColor="@color/textSecundary" />
             </LinearLayout>
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -71,15 +83,17 @@
                 android:layout_width="@dimen/img_item_location_width"
                 android:layout_height="@dimen/img_item_location_height"
                 android:src="@drawable/ic_phone" />
+
             <TextView
                 android:id="@+id/store_address_phone_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/exemple_phone"
-                android:textColor="@color/textSecundary"
                 android:layout_marginLeft="@dimen/text_distance_left"
-                android:layout_marginRight="@dimen/text_distance_right"/>
+                android:layout_marginRight="@dimen/text_distance_right"
+                android:text="@string/exemple_phone"
+                android:textColor="@color/textSecundary" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -100,6 +114,7 @@
                 android:text="@string/exemple_admin"
                 android:textColor="@color/textSmall" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

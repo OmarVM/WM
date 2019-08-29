@@ -19,9 +19,15 @@ import com.example.walmartlocatoromar.ui.presenters.ListFilterByDistanceImple
 import com.example.walmartlocatoromar.ui.presenters.ListStoresImple
 import com.example.walmartlocatoromar.ui.views.ListStoresUI
 import com.example.walmartlocatoromar.ui.views.activities.Details
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.SupportMapFragment
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity(), ListStoresUI {
+class MainActivity : AppCompatActivity(), ListStoresUI, OnMapReadyCallback {
 
     private lateinit var presenter: ListStoresImple
     private lateinit var listByDistancePresenter: ListFilterByDistance
@@ -29,6 +35,9 @@ class MainActivity : AppCompatActivity(), ListStoresUI {
     private lateinit var mAdapter: AdapterListStores
 
     private lateinit var listItems: List<Store>
+    private lateinit var listItemsFilter: List<Store>
+
+    private lateinit var mMap: GoogleMap
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +46,6 @@ class MainActivity : AppCompatActivity(), ListStoresUI {
         context = applicationContext
         presenter = ListStoresImple(this)
         presenter.doRequestAPI()
-
     }
 
     override fun infoFromData(listItems: List<Store>) {
@@ -53,9 +61,29 @@ class MainActivity : AppCompatActivity(), ListStoresUI {
     override fun listFilterByDistance(listItems: List<Store>) {
         Log.d("TAG", "Total Items Filter: ${listItems.size}")
         layout_content_wait.visibility = View.INVISIBLE
+        this.listItemsFilter = listItems
         rv_list_stores.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         mAdapter = AdapterListStores(listItems , this)
         rv_list_stores.adapter = mAdapter
+
+        val mapFragment = supportFragmentManager
+            .findFragmentById(R.id.map_main_view) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+    }
+
+    override fun onMapReady(p0: GoogleMap) {
+        mMap = p0
+        if(listItemsFilter.isNotEmpty()){
+            val zoom = CameraUpdateFactory.zoomTo(10F)
+            for (store in listItemsFilter){
+                val storeLocation = LatLng(store.latPoint.toDouble(), store.lonPoint.toDouble())
+                Log.d("TAG", "LatLon -> ${store.latPoint.toDouble()} <-> ${store.lonPoint.toDouble()}")
+                mMap.addMarker(MarkerOptions().position(storeLocation).title(store.name))
+            }
+            val center = LatLng(19.432304, -99.178723)
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(center))
+            mMap.animateCamera(zoom)
+        }
     }
 
     override fun onClickItemAdapter(item: Store) {
