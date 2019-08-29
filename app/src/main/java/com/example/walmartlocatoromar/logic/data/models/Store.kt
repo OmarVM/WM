@@ -1,5 +1,7 @@
 package com.example.walmartlocatoromar.logic.data.models
 
+import java.io.Serializable
+
 data class Store(
     var codeMessage: Int,
     var message: String,
@@ -15,5 +17,5 @@ data class Store(
     var latPoint: String,
     var lonPoint: String,
     var opens: String,
-    var distanceTo: Float) {
+    var distanceTo: Float) : Serializable{
 }

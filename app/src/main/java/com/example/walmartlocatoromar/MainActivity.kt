@@ -2,6 +2,7 @@ package com.example.walmartlocatoromar
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -17,6 +18,7 @@ import com.example.walmartlocatoromar.ui.presenters.ListFilterByDistance
 import com.example.walmartlocatoromar.ui.presenters.ListFilterByDistanceImple
 import com.example.walmartlocatoromar.ui.presenters.ListStoresImple
 import com.example.walmartlocatoromar.ui.views.ListStoresUI
+import com.example.walmartlocatoromar.ui.views.activities.Details
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), ListStoresUI {
@@ -38,7 +40,6 @@ class MainActivity : AppCompatActivity(), ListStoresUI {
 
     }
 
-
     override fun infoFromData(listItems: List<Store>) {
         Log.d("TAG", "Total Items From Data: ${listItems.size}")
         this.listItems = listItems
@@ -53,10 +54,15 @@ class MainActivity : AppCompatActivity(), ListStoresUI {
         Log.d("TAG", "Total Items Filter: ${listItems.size}")
         layout_content_wait.visibility = View.INVISIBLE
         rv_list_stores.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-        mAdapter = AdapterListStores(listItems)
+        mAdapter = AdapterListStores(listItems , this)
         rv_list_stores.adapter = mAdapter
     }
 
+    override fun onClickItemAdapter(item: Store) {
+        var intent = Intent(context, Details::class.java)
+        intent.putExtra(Constants.ACTIVITY_DETAILS, item)
+        startActivity(intent)
+    }
 
     fun requestUserPermissionLocation(){
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&

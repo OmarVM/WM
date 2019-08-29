@@ -6,4 +6,6 @@
     <string name="exemple_distance">3.0</string>
     <string name="exemple_distance_mesure">km</string>
     <string name="message_wait">Obtenido lista de tiendas ...</string>
+    <string name="exemple_cp">77710</string>
+    <string name="exemple_admin">JUAN FRANCISCO VILLAFAÑA BALTIERRA</string>
 </resources>
